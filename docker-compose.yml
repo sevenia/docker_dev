@@ -1,0 +1,73 @@
+version: '3.2'
+services:
+  mysql:
+    build:
+      context: ./Mysql/
+      dockerfile: Dockerfile
+    image: 'sevenia.local.mysql:base'
+    container_name: sevenia.local.mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=PLEASE_CHANGE_ME!
+    volumes:
+      - './Mysql/data:/var/lib/mysql'
+    network_mode: host
+    
+  mongodb:
+    build:
+      context: ./MongoDB/
+      dockerfile: Dockerfile
+    image: 'sevenia.local.mongodb:base'
+    container_name: sevenia.local.mongodb
+    volumes:
+      - './MongoDB/data:/data/db'
+    network_mode: host
+    
+  redis:
+    build:
+      context: ./Redis/
+      dockerfile: Dockerfile
+    image: 'sevenia.local.redis:base'
+    container_name: sevenia.local.redis
+    volumes:
+      - './Redis/data:/data'
+    network_mode: host
+    
+#  rabbitmq:
+#    build:
+#      context: ./RabbitMQ/
+#      dockerfile: Dockerfile
+#    image: 'sevenia.local.rabbitmq:base'
+#    container_name: sevenia.local.rabbitmq
+#    volumes:
+#      - './RabbitMQ/data/etc/:/etc/rabbitmq/'
+#      - './RabbitMQ/data/data/:/var/lib/rabbitmq/'
+#      - './RabbitMQ/data/logs/:/var/log/rabbitmq/'
+#    network_mode: host
+#
+#  php:
+#    build:
+#      context: ./PHP/
+#      dockerfile: Dockerfile
+#    image: 'sevenia.local.php:base'
+#    container_name: sevenia.local.php
+#    depends_on:
+#      - mysql
+#      - redis
+#      - rabbitmq
+#      - mongodb
+#    volumes:
+#      - '~/Sevenia/Sources:/var/www'
+#    network_mode: host
+#
+#  nginx:
+#    build:
+#      context: ../Nginx/
+#      dockerfile: Dockerfile
+#    image: 'sevenia.local.nginx:base'
+#    container_name: sevenia.local.nginx
+#    depends_on:
+#      - php
+#    volumes:
+#      - '~/Sevenia/Sources:/var/wwwww'
+#      - '../Nginx/conf:/etc/nginx'
+#    network_mode: host
